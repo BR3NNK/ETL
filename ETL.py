@@ -1,5 +1,6 @@
-import requests
+﻿import requests
 import json
+import os
 
 # função de extração dos dados da API
 def extract_data(endpoint):
@@ -10,41 +11,28 @@ def extract_data(endpoint):
         print(f"Erro na extração dos dados da API: {response.status_code}")
         return None
 
+
 # função de carregamento dos dados da API para um arquivo .json em uma pasta, no caso a pasta 'users'
 def load_data(data, path):
-    id = data["id"]
-
+    # cria a pasta e verifica se ela existe (se existir ele meio que não cria)
+    os.makedirs(path, exist_ok=True)
     # salva o nome do arquivo .json na pasta como o id do usuário .json
-    with open(f"{path}/{id}.json", "w") as file:
+    with open(f"{path}/{data['id']}.json", "w") as file:
         json.dump(data, file)
-
-
-# endpoint_users = "https://dummyjson.com/users/"
-# endpoint_products = "https://dummyjson.com/products/"
-
-# # extrai até o final todos os dados presentes na API através de um loop infinito que quebra ao terminar os usuários na API
-# count = 1
-# while True:
-#     data_users = extract_data(endpoint_users + str(count))
-#     if data_users:
-#         load_data(data_users, "users")
-#     else:
-#         print(f"Erro na extração dos dados da API: {data_users}")
-#         break
-#     count += 1
-
+        
 def loop_load_data(endpoint):
-    endpoint = 'https://dummyjson.com/' + endpoint
-
+    base_url = f"https://dummyjson.com/{endpoint}"
     count = 1
+
     while True:
-        data = extract_data(endpoint + str(count))
+        data = extract_data(f"{base_url}/{count}")
         if data:
             load_data(data, endpoint)
         else:
             print(f"Erro na extração dos dados da API: {data}")
             break
         count += 1
+
 
 endpoints = ["users", "products"]
 
