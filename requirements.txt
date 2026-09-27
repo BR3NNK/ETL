@@ -8,3 +8,10 @@ requests==2.34.2
 six==1.17.0
 tzdata==2026.4
 urllib3==2.8.0
+requests
+SQLAlchemy
+psycopg[binary]
+python-dotenv
+pydantic
+tenacity
+alembic

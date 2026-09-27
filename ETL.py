@@ -2,6 +2,7 @@
 import json
 import os
 
+
 # função de extração dos dados da API
 def extract_data(endpoint):
     response = requests.get(endpoint)
@@ -19,7 +20,8 @@ def load_data(data, path):
     # salva o nome do arquivo .json na pasta como o id do usuário .json
     with open(f"{path}/{data['id']}.json", "w") as file:
         json.dump(data, file)
-        
+
+
 def loop_load_data(endpoint):
     base_url = f"https://dummyjson.com/{endpoint}"
     count = 1
